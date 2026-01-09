@@ -1,0 +1,5 @@
+pegar 4 numeros
+primeiro numero -> pode ser de 15,25 a 28,28
+segundo numero -> tem que ser menor que o primeiro
+terceiro numero -> tem que ser menor que o segundo
+quarto numero -> tem que ser a soma dos 3 anteriores

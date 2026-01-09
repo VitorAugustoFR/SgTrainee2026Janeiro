@@ -3,6 +3,7 @@ clear
 @ 01,10 say "Hello World!"
 
 /*
+fazendo array
 mat := Array(1,1)
 
 mat[1,1] := 5

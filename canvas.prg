@@ -1,11 +1,26 @@
+//Resolver o problema de cores
+/*
+   para guardar o canvas devo:
+      guardar em um array a posicao no canvas e a cor,
+      passar a posicao para um 
+      if enter pressed
+         array[]
+*/
+
+static function brushMov
+
+
 clear
 SetMode (40,150)
 
 cBrush := space(8)
-cPencil := "B/B"
+cPencil := 'B/B'
 cLimparCanvas := space(1)
 lProgramaRodando := .t.
 cCoresDisponiveis := "AZULVERDEBRANCOVERMELHO"
+nCoordenadasPintadas := array(4,{29,147})
+nPosicaoH := 73
+nPosicaoV := 15
 
 do while lProgramaRodando == .t.
    @ 06,00 to 39,149 
@@ -17,42 +32,84 @@ do while lProgramaRodando == .t.
       @ 05,09 say "     "    color 'N/G'  
       @ 05,17 say "      "   color 'N/W'  
       @ 05,26 say "        " color 'N/R'  
-      @ 01,29 get cBrush picture("@!")
+
+      
+      @ 01,29 get cBrush picture '@!'
       read
-      if !(cBrush $ cCoresDisponiveis)
+
+      if LastKey() == 27
+         nMenuOpcao := Alert("O que deseja fazer?", {"Continuar", "Selecao de cores", "Sair"})
+         if nMenuOpcao == 1
+            
+         elseif  nMenuOpcao == 2
+            exit
+         elseif nMenuOpcao == 3
+            lProgramaRodando := .f.
+            exit
+         endif
+      endif
+      
+      if AllTrim(cBrush) $ "AZUL"
+            cPencil := 'N/B'
+      elseif AllTrim(cBrush) $ "VERDE"
+            cPencil := 'N/G'
+      elseif AllTrim(cBrush) $ "BRANCO"
+            cPencil := 'N/W'
+      elseif AllTrim(cBrush) $ "VERMELHO"
+            cPencil := 'N/R'
+      else
          Alert("Cor Invalida!")
          loop
       endif
-      switch cBrush
-         case cBrush == "AZUL"
-            cPencil color 'N/B' 
-         case cBrush == "VERDE"
-            cPencil color 'N/G'
-         case cBrush == "BRANCO"
-            cPencil color 'N/W'
-         case cBrush == "VERMELHO"
-            cPencil color 'N/R'
-      end switch
 
       @ 01,40 say "Deseja limpar o canvas?(Digite S ou N)"
-      @ 01,79 get cLimparCanvas picture("@!")
+      @ 01,79 get cLimparCanvas picture '@!' valid cLimparCanvas $ "SN"
       read
       if cLimparCanvas == "S"
-         clear// escolher um tamanho especifico para o canvas depois
+         @ 07,01 clear to 38,149// escolher um tamanho especifico para o canvas depois
+         exit
       endif
    enddo
 
    do While(.t.)
+      @ 06,00 to 39,149 
+
+      if LastKey()     == 65 .or. LastKey() == 97  .and. nPosicaoH > 1//A
+          //Ultimo A
+      @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
+          nPosicaoH--
+      elseif LastKey() == 68 .or. LastKey() == 100 .and. nPosicaoH < 78//D
+          //Ultimo D
+      @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
+          nPosicaoH++
+      elseif LastKey() == 87 .or. LastKey() == 119 .and. nPosicaoV > 1//W
+          //Ultimo w
+      @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
+          nPosicaoV--
+      elseif LastKey() == 83 .or. LastKey() == 115 .and. nPosicaoV < 23//S
+          //Ultimo S
+      @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
+          nPosicaoV++
+      end if
+      
+      @ nPosicaoV,nPosicaoH say " " color cPencil
+
+
+
       if LastKey() == 27
-         nMenuOpcao := Alert("Continuar", "Selecao de cores", "Sair")
-         if nMenuOpcao := 1
+         nMenuOpcao := Alert("O que deseja fazer?", {"Continuar", "Selecao de cores", "Sair"})
+         if nMenuOpcao == 1
             
-         elseif  nMenuOpcao := 2
+         elseif  nMenuOpcao == 2
             exit
-         elseif nMenuOpcao := 3
+         elseif nMenuOpcao == 3
             lProgramaRodando := .f.
+            exit
          endif
       endif
+
+      //
       
+      inkey(0)
    enddo
 enddo

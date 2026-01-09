@@ -45,6 +45,13 @@ do while .t.
             endif
         endif
 
+                    //Checa se o player esta no campo de target do inimigo
+            if (nDistanciaH < 8 .and. nDistanciaH > -8) .or. (nDistanciaV < 3 .and. nDistanciaV > -3)
+                lViuPlayer := 1
+            else
+                lViuPlayer := 0
+            end if
+
         @ nVspdInimigo,nHspdInimigo say " " Color cInimigo
         @ nVspd,nHspd say " " Color cPersonagem
 
@@ -91,6 +98,10 @@ do while .t.
             nPosicaoArmaV := -1
         endif
 
+        //Reduzir vida do player quando encostar no inimigo
+        if nHspd == nHspdInimigo .and. nVspd == nVspdInimigo
+            nVidaPersonagem--
+        end if
         if nPosicaoArmaV == nVspdInimigo .and. nPosicaoArmaH == nHspdInimigo
             nVidaInimigo--
         endif
@@ -98,17 +109,10 @@ do while .t.
         //Inimigo
         //Enquanto a vida do inimigo for maior que zero
         if nVidaInimigo > 0
-            //Reduzir vida do player quando encostar no inimigo
-            if nHspd == nHspdInimigo .and. nVspd == nVspdInimigo
-                nVidaPersonagem--
-            end if
 
             // if nHspd <= (nHspdInimigo + 5) .or. (nHspdInimigo - 5) .or. (nHspdInimigo + 5) .or. (nHspdInimigo + 5) .or.
 
-            //Checa se o player esta no campo de target do inimigo
-            if (nDistanciaH < 8 .and. nDistanciaH > -8) .or. (nDistanciaV < 3 .and. nDistanciaV > -3)
-                lViuPlayer := 1
-            end if
+
 
             //Comportamento do inimigo sem ver o player
             switch lViuPlayer
