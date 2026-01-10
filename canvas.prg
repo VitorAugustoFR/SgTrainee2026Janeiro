@@ -7,7 +7,7 @@
          array[]
 */
 
-static function brushMov
+//static function brushMov
 
 
 clear
@@ -15,12 +15,15 @@ SetMode (40,150)
 
 cBrush := space(8)
 cPencil := 'B/B'
+nCorDoPincel := 0
 cLimparCanvas := space(1)
 lProgramaRodando := .t.
 cCoresDisponiveis := "AZULVERDEBRANCOVERMELHO"
-nCoordenadasPintadas := array(4,{29,147})
+nCoordenadasPintadas := array(38, 148)
 nPosicaoH := 73
 nPosicaoV := 15
+
+
 
 do while lProgramaRodando == .t.
    @ 06,00 to 39,149 
@@ -51,12 +54,16 @@ do while lProgramaRodando == .t.
       
       if AllTrim(cBrush) $ "AZUL"
             cPencil := 'N/B'
+            nCorDoPincel := 0
       elseif AllTrim(cBrush) $ "VERDE"
             cPencil := 'N/G'
+            nCorDoPincel := 1
       elseif AllTrim(cBrush) $ "BRANCO"
             cPencil := 'N/W'
+            nCorDoPincel := 2
       elseif AllTrim(cBrush) $ "VERMELHO"
             cPencil := 'N/R'
+            nCorDoPincel := 3
       else
          Alert("Cor Invalida!")
          loop
@@ -78,23 +85,43 @@ do while lProgramaRodando == .t.
           //Ultimo A
       @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
           nPosicaoH--
-      elseif LastKey() == 68 .or. LastKey() == 100 .and. nPosicaoH < 78//D
+      elseif LastKey() == 68 .or. LastKey() == 100 .and. nPosicaoH < 148//D
           //Ultimo D
       @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
           nPosicaoH++
-      elseif LastKey() == 87 .or. LastKey() == 119 .and. nPosicaoV > 1//W
+      elseif LastKey() == 87 .or. LastKey() == 119 .and. nPosicaoV > 7//W
           //Ultimo w
       @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
           nPosicaoV--
-      elseif LastKey() == 83 .or. LastKey() == 115 .and. nPosicaoV < 23//S
+      elseif LastKey() == 83 .or. LastKey() == 115 .and. nPosicaoV < 38//S
           //Ultimo S
       @ nPosicaoV,nPosicaoH clear to nPosicaoV,nPosicaoH
           nPosicaoV++
       end if
       
       @ nPosicaoV,nPosicaoH say " " color cPencil
+      InKey(0)
 
 
+      if LastKey() == 13
+         nCoordenadasPintadas[nPosicaoV, nPosicaoH] := cPencil
+         //@ nPosicaoV, nPosicaoH say " " color cPencil
+      endif
+
+
+      for i := 7 to 38
+         for x := 1 to 148
+            @ i, x say " " color nCoordenadasPintadas[i,x]
+         next
+      next
+      /*
+      for i := 0 to linhas - 1
+         for x := 0 to colunas - 1
+            @ i,x say " " color nCoordenadasPintada[i,x]
+         endfor
+      endfor
+
+      */
 
       if LastKey() == 27
          nMenuOpcao := Alert("O que deseja fazer?", {"Continuar", "Selecao de cores", "Sair"})
@@ -109,7 +136,5 @@ do while lProgramaRodando == .t.
       endif
 
       //
-      
-      inkey(0)
    enddo
 enddo

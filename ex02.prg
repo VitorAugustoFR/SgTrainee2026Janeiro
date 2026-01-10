@@ -8,9 +8,9 @@ nIdade := 0
 @ 03,01 say "Digite seu peso.: "
 @ 05,01 say "Digite sua idade: "
 
-@ 01,18 get cNome 
-@ 03,18 get nPeso  picture '@E 999.99'
-@ 05,18 get nIdade picture '999' valid nIdade >= 0 .and. nIdade < 130
+@ 01,18 get cNome  picture '@!'        valid !Empty(cNome)
+@ 03,18 get nPeso  picture '@E 999.99' valid nPeso > 0
+@ 05,18 get nIdade picture '999'       valid nIdade >= 0 .and. nIdade < 130
 read
 
 clear
