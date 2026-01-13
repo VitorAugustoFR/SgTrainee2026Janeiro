@@ -37,7 +37,7 @@ do while .t.
     if nVidaPersonagem > 0
 
         if LastKey() == 27
-            nOpcao1 := Alert("Pause", {"Continuar","Sair"}, "RB+/W+")
+            nOpcao1 := Alert("Pause", {"Continuar", "Restart", "Sair"}, "RB+/W+")
             if nOpcao1 == 1
                 
             elseif nOpcao1 == 2
@@ -152,7 +152,7 @@ do while .t.
     end if
 
     if nVidaPersonagem == 0
-        nOpca1 := Alert("Game Over", {"Sair"})
+        nOpca1 := Alert("Game Over", {"Sair", "Repetir"})
         if nOpca1 == 1
             clear
             exit

@@ -1,33 +1,37 @@
 //Resolver o problema de cores
 /*
-   para guardar o canvas devo:
-      guardar em um array a posicao no canvas e a cor,
-      passar a posicao para um 
-      if enter pressed
-         array[]
-*/
+   para fazer o Ctrl + Z devo
+   guardar a posicao dos ultimos 8 pixel colocados
+   array (8) := last key space
+   
+   
 
-//static function brushMov
+*/
 
 
 clear
 SetMode (40,150)
 
-cBrush := space(8)
-cPencil := 'B/B'
-nCorDoPincel := 0
-cLimparCanvas := space(1)
-lProgramaRodando := .t.
-cCoresDisponiveis := "AZULVERDEBRANCOVERMELHO"
+cBrush               := space(8)
+cPencil              := 'B/B'
+nCorDoPincel         := 0
+cLimparCanvas        := space(1)
+lProgramaRodando     := .t.
+nCanvas              := 0
+cCoresDisponiveis    := "AZULVERDEBRANCOVERMELHO"
 nCoordenadasPintadas := array(38, 148)
-nPosicaoH := 73
-nPosicaoV := 15
+nPosicaoH            := 73
+nPosicaoV            := 15
 
-
+//Variaveis relacionadas ao control z
+//nPosicaoCorCtrlZ := 1
+//nPosicaoCtrlZV   := array(8)
+//nPosicaoCtrlZH   := array(8)
+//nCorCtrlZ        := array(8)
 
 do while lProgramaRodando == .t.
    @ 06,00 to 39,149 
-   do while(cLimparCanvas != "N")
+   do while nCanvas == 0
       @ 01,01 say "Escolha a cor do seu pincel: "
       @ 03,01 say "Cores disponiveis"
       @ 04,01 say " Azul | Verde | Branco | Vermelho"
@@ -70,15 +74,21 @@ do while lProgramaRodando == .t.
       endif
 
       @ 01,40 say "Deseja limpar o canvas?(Digite S ou N)"
-      @ 01,79 get cLimparCanvas picture '@!' valid cLimparCanvas $ "SN"
+      @ 01,79 get cLimparCanvas picture "@!" valid cLimparCanvas $ "SN"
       read
       if cLimparCanvas == "S"
          @ 07,01 clear to 38,149// escolher um tamanho especifico para o canvas depois
-         exit
+         for i := 7 to 38
+            for x := 1 to 148
+               nCoordenadasPintadas[i,x] := 'N/N'
+            next
+         next
       endif
+      
+      nCanvas := 1
    enddo
 
-   do While(.t.)
+   do While nCanvas == 1
       @ 06,00 to 39,149 
 
       if LastKey()     == 65 .or. LastKey() == 97  .and. nPosicaoH > 1//A
@@ -102,10 +112,46 @@ do while lProgramaRodando == .t.
       @ nPosicaoV,nPosicaoH say " " color cPencil
       InKey(0)
 
+      //Key binds
+      if LastKey() == 5
+            cPencil := 'N/B'
+         //azul
+      elseif LastKey() == 19
+         //verde
+            cPencil := 'N/G'
+      elseif LastKey() == 24
+         //branco
+            cPencil := 'N/W'
+      elseif LastKey() == 4
+         //vermelho
+            cPencil := 'N/R'
+      elseif LastKey() == 93
+         @ 07,01 clear to 38,149
+         for i := 7 to 38
+            for x := 1 to 148
+               nCoordenadasPintadas[i,x] := 'N/N'
+            next
+         next
+      elseif LastKey() == 26
+      endif 
+
 
       if LastKey() == 13
          nCoordenadasPintadas[nPosicaoV, nPosicaoH] := cPencil
-         //@ nPosicaoV, nPosicaoH say " " color cPencil
+
+         //nPosicaoCtrlZV[nPosicaoCorCtrlZ]           := nPosicaoV
+         //nPosicaoCtrlZH[nPosicaoCorCtrlZ]           := nPosicaoH
+         //nCorCtrlZ[nPosicaoCorCtrlZ]                := nCoordenadasPintadas[nPosicaoV, nPosicaoH]
+         //nPosicaoCorCtrlZ++
+      endif
+      //if LastKey() = 26
+      //   nPosicaoMomentaniaV := nPosicaoCtrlZV[nPosicaoCorCtrlZ-1]
+      //   nPosicaoMomentaniaH := nPosicaoCtrlZH[nPosicaoCorCtrlZ-1]
+      //   nPosicaoCorCtrlZ--
+      //   nCoordenadasPintadas[nPosicaoMomentaniaV,nPosicaoMomentaniaH] := nCorCtrlZ[nPosicaoCorCtrlZ]
+      //endif
+      if LastKey() = 8
+         nCoordenadasPintadas[nPosicaoV, nPosicaoH] := 'N/N'
       endif
 
 
@@ -114,27 +160,18 @@ do while lProgramaRodando == .t.
             @ i, x say " " color nCoordenadasPintadas[i,x]
          next
       next
-      /*
-      for i := 0 to linhas - 1
-         for x := 0 to colunas - 1
-            @ i,x say " " color nCoordenadasPintada[i,x]
-         endfor
-      endfor
-
-      */
 
       if LastKey() == 27
          nMenuOpcao := Alert("O que deseja fazer?", {"Continuar", "Selecao de cores", "Sair"})
          if nMenuOpcao == 1
-            
+            nCanvas := 1
          elseif  nMenuOpcao == 2
-            exit
+            nCanvas := 0
          elseif nMenuOpcao == 3
             lProgramaRodando := .f.
             exit
          endif
       endif
 
-      //
    enddo
 enddo
