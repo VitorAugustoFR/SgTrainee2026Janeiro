@@ -1,3 +1,5 @@
+setColor ('R/W')
+
 clear
 cNomeUm := space(20)
 cNome := "Cleber"

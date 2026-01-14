@@ -8,11 +8,12 @@ nPeso  := 0
 @ 01,01 say "Digite seu sexo.: "
 
 @ 01,18 get cSexo picture "@!" valid cSexo $ "MF"
+
 read
 
 if cSexo == "F"
    @ 02,01 say "Digite sua idade: "
-
+   
    @ 02,18 get nIdade picture "999" valid nIdade >= 0 .and. nidade <= 130
    read
 
