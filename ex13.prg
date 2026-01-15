@@ -32,7 +32,6 @@ elseif nCodigo >= 8 .and. nCodigo <= 15
 else
    cClassificacao := "Codigo invalido"
    cCor := 'W/RB'
-
 endif
 
 @ 03,01 say "Classificacao do produto: " + AllTrim(cClassificacao) color cCor 

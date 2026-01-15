@@ -1,4 +1,3 @@
-setColor ('R/W')
 
 clear
 cNomeUm := space(20)
