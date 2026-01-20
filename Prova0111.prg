@@ -2,6 +2,12 @@
 
 clear
 
+/*Correções feitas
+validaçao para evitar ter notas e faltas a baixo de 0
+coloquei as disciplinas as quais o aluno reprovou
+calculo da mensalidade unico(ao invés de usar varios ifs)
+*/
+
 //Variaveis
 cNome             := space(20)
 cCurso            := space(10)
@@ -34,6 +40,7 @@ cAprovaDisciplinaDoisFalta := "G/N"
 cAprovaDisciplinaTresNota  := "G/N"
 cAprovaDisciplinaTresFalta := "G/N"
 nNumeroDeDPs               := 0
+cMateriasQueFicouEmDP      := " "
 cAprovacao                 := "Aprovado"
 
 @ 00,00 to 09,79
@@ -64,20 +71,24 @@ clear
 //Disciplina 1
 @ 01,01 say "Insira as notas de faltas bimestrais das respectivas disciplinas: "
 
-@ 02,00 to 06,75
-@ 02,36 say cDisciplinaUm
-@ 03,01 say "Primeiro Bimestre | Segundo Bimestre | Terceiro Bimestre | Quarto Bimestre"
-@ 04,01 say "                  |                  |                   |"
-@ 05,01 say "                  |                  |                   |"
+@ 02,00 to 08,75
+@ 05,01 say " " + cDisciplinaUm
+@ 06,01 say " " + cDisciplinaDois
+@ 07,01 say " " + cDisciplinaTres
+@ 03,05 say " |Primeiro Bimestre | Segundo Bimestre | Terceiro Bimestre | Quarto Bimestre"
+@ 04,05 say " | Notas |  Faltas  | Notas |  Faltas  | Notas  |  Faltas  | Notas | Faltas "
+@ 05,05 say " |       |          |       |          |        |          |       |"
+@ 06,05 say " |       |          |       |          |        |          |       |"
+@ 07,05 say " |       |          |       |          |        |          |       |"
 
-@ 04,08 get nPrimeiroBiNotas  picture "999" valid nPrimeiroBiNotas <= 100
-@ 05,09 get nPrimeiroBiFaltas picture "99" 
-@ 04,27 get nSegundoBiNotas   picture "999" valid nSegundoBiNotas  <= 100
-@ 05,28 get nSegundoBiFaltas  picture "99" 
-@ 04,47 get nTerceiroBiNotas  picture "999" valid nTerceiroBiNotas <= 100
-@ 05,48 get nTerceiroBiFaltas picture "99" 
-@ 04,65 get nQuartoBiNotas    picture "999" valid nQuartoBiNotas   <= 100
-@ 05,66 get nQuartoBiFaltas   picture "99" 
+@ 05,08 get nPrimeiroBiNotas  picture "999" valid nPrimeiroBiNotas <= 100 .and. nPrimeiroBiNotas >= 0
+@ 05,17 get nPrimeiroBiFaltas picture "99"  valid nPrimeiroBiFaltas >= 0
+@ 05,27 get nSegundoBiNotas   picture "999" valid nSegundoBiNotas  <= 100 .and. nSegundoBiNotas >= 0
+@ 05,36 get nSegundoBiFaltas  picture "99"  valid nSegundoBiFaltas >= 0
+@ 05,46 get nTerceiroBiNotas  picture "999" valid nTerceiroBiNotas <= 100 .and. nTerceiroBiNotas >= 0
+@ 05,56 get nTerceiroBiFaltas picture "99"  valid nTerceiroBiFaltas >= 0
+@ 05,66 get nQuartoBiNotas    picture "999" valid nQuartoBiNotas   <= 100 .and. nQuartoBiNotas >= 0
+@ 05,74 get nQuartoBiFaltas   picture "99"  valid nQuartoBiFaltas >= 0
 read
 //Calculos
 nMediaNotasDisciplinaUm  := (nPrimeiroBiNotas + nSegundoBiNotas + nTerceiroBiNotas + nQuartoBiNotas) / 4
@@ -95,21 +106,14 @@ if nSerie > 3
 end if
 
 //Discipina 2
-@ 08,00 to 12,75
-@ 10,01 say "                  |                  |                   |"
-@ 11,01 say "                  |                  |                   |"
-
-@ 08,36 say cDisciplinaDois
-@ 09,01 say "Primeiro Bimestre | Segundo Bimestre | Terceiro Bimestre | Quarto Bimestre"
-
-@ 10,08 get nPrimeiroBiNotas  picture "999" valid nPrimeiroBiNotas <= 100
-@ 11,09 get nPrimeiroBiFaltas picture "99" 
-@ 10,27 get nSegundoBiNotas   picture "999" valid nSegundoBiNotas  <= 100
-@ 11,28 get nSegundoBiFaltas  picture "99" 
-@ 10,47 get nTerceiroBiNotas  picture "999" valid nTerceiroBiNotas <= 100
-@ 11,48 get nTerceiroBiFaltas picture "99" 
-@ 10,65 get nQuartoBiNotas    picture "999" valid nQuartoBiNotas   <= 100
-@ 11,66 get nQuartoBiFaltas   picture "99" 
+@ 06,08 get nPrimeiroBiNotas  picture "999" valid nPrimeiroBiNotas <= 100 .and. nPrimeiroBiNotas >= 0
+@ 06,17 get nPrimeiroBiFaltas picture "99"  valid nPrimeiroBiFaltas >= 0
+@ 06,27 get nSegundoBiNotas   picture "999" valid nSegundoBiNotas  <= 100 .and. nSegundoBiNotas >= 0
+@ 06,36 get nSegundoBiFaltas  picture "99"  valid nSegundoBiFaltas >= 0
+@ 06,46 get nTerceiroBiNotas  picture "999" valid nTerceiroBiNotas <= 100 .and. nTerceiroBiNotas >= 0
+@ 06,56 get nTerceiroBiFaltas picture "99"  valid nTerceiroBiFaltas >= 0
+@ 06,66 get nQuartoBiNotas    picture "999" valid nQuartoBiNotas   <= 100 .and. nQuartoBiNotas >= 0
+@ 06,74 get nQuartoBiFaltas   picture "99"  valid nQuartoBiFaltas >= 0
 read
 //Calculos
 nMediaNotasDisciplinaDois  := (nPrimeiroBiNotas + nSegundoBiNotas + nTerceiroBiNotas + nQuartoBiNotas) / 4
@@ -127,21 +131,14 @@ if nSerie > 3
 end if
 
 //Disciplina 3
-@ 14,00 to 18,75
-@ 16,01 say "                  |                  |                   |"
-@ 17,01 say "                  |                  |                   |"
-
-@ 14,36 say cDisciplinaTres
-@ 15,01 say "Primeiro Bimestre | Segundo Bimestre | Terceiro Bimestre | Quarto Bimestre"
-
-@ 16,08 get nPrimeiroBiNotas  picture "999" valid nPrimeiroBiNotas <= 100
-@ 17,09 get nPrimeiroBiFaltas picture "99" 
-@ 16,27 get nSegundoBiNotas   picture "999" valid nSegundoBiNotas  <= 100
-@ 17,28 get nSegundoBiFaltas  picture "99" 
-@ 16,47 get nTerceiroBiNotas  picture "999" valid nTerceiroBiNotas <= 100
-@ 17,48 get nTerceiroBiFaltas picture "99" 
-@ 16,65 get nQuartoBiNotas    picture "999" valid nQuartoBiNotas   <= 100
-@ 17,66 get nQuartoBiFaltas   picture "99" 
+@ 07,08 get nPrimeiroBiNotas  picture "999" valid nPrimeiroBiNotas <= 100 .and. nPrimeiroBiNotas >= 0
+@ 07,17 get nPrimeiroBiFaltas picture "99"  valid nPrimeiroBiFaltas >= 0
+@ 07,27 get nSegundoBiNotas   picture "999" valid nSegundoBiNotas  <= 100 .and. nSegundoBiNotas >= 0
+@ 07,36 get nSegundoBiFaltas  picture "99"  valid nSegundoBiFaltas >= 0
+@ 07,46 get nTerceiroBiNotas  picture "999" valid nTerceiroBiNotas <= 100 .and. nTerceiroBiNotas >= 0
+@ 07,56 get nTerceiroBiFaltas picture "99"  valid nTerceiroBiFaltas >= 0
+@ 07,66 get nQuartoBiNotas    picture "999" valid nQuartoBiNotas   <= 100 .and. nQuartoBiNotas >= 0
+@ 07,74 get nQuartoBiFaltas   picture "99"  valid nQuartoBiFaltas >= 0
 read
 //Calculos
 nMediaNotasDisciplinaTres  := (nPrimeiroBiNotas + nSegundoBiNotas + nTerceiroBiNotas + nQuartoBiNotas) / 4
@@ -188,18 +185,20 @@ end if
 nValorMensalidadeOriginal := nValorMensalidade
 if cAprovaDisciplinaUmNota == "R/N" .or. cAprovaDisciplinaUmFalta == "R/N"
    nNumeroDeDPs++
-   nValorMensalidade += nValorMensalidadeOriginal * 0.2
+   cMateriasQueFicouEmDP += cDisciplinaUm + " "
 end if
 
 if cAprovaDisciplinaDoisNota == "R/N" .or. cAprovaDisciplinaDoisFalta == "R/N"
    nNumeroDeDPs++
-   nValorMensalidade += nValorMensalidadeOriginal * 0.2
+   cMateriasQueFicouEmDP += cDisciplinaDois + " "
 end if
 
 if cAprovaDisciplinaTresNota == "R/N" .or. cAprovaDisciplinaTresFalta == "R/N"
    nNumeroDeDPs++
-   nValorMensalidade += nValorMensalidadeOriginal * 0.2
+   cMateriasQueFicouEmDP += cDisciplinaTres + " "
 end if
+
+nValorMensalidade += nValorMensalidadeOriginal * (nNumeroDeDPs * 0.2)
 
 if nNumeroDeDPs > 0
    cAprovacao := "Aprovado com pendencia(s)"
@@ -212,13 +211,13 @@ end if
 
 clear
 //boletim
-@ 00,00 to 11,63
+@ 00,00 to 12,64
 
-@ 00,32 say "Boletim Escolar"
+@ 00,24 say "Boletim Escolar"
 @ 01,01 say "Aluno: " + cNome
 @ 02,01 say "Curso: " + cCurso
-@ 03,01 say "Seria: " + AllTrim(Str(nSerie))
-@ 04,01 say "--------------------------------------------------------------"
+@ 03,01 say "Serie: " + AllTrim(Str(nSerie))
+@ 04,01 say "---------------------------------------------------------------"
 @ 05,01 say "Disciplina 1: " + cDisciplinaUm
 @ 06,01 say "Media notas: " + AllTrim(Str(nMediaNotasDisciplinaUm)) color cAprovaDisciplinaUmNota
 @ 07,01 say "Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaUm)) color cAprovaDisciplinaUmFalta
@@ -229,4 +228,5 @@ clear
 @ 06,42 say "| Media notas: " + AllTrim(Str(nMediaNotasDisciplinaTres)) color cAprovaDisciplinaTresNota
 @ 07,42 say "| Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaTres)) color cAprovaDisciplinaTresFalta
 @ 09,01 say "Valor atualizado da mensaliadade: " + AllTrim(Str(nValorMensalidade))
-@ 10,01 say "Situacao: " + cAprovacao
+@ 10,01 say "Ficou com Dependencia nas seguintes materia(s):" + cMateriasQueFicouEmDP
+@ 11,01 say "Situacao: " + cAprovacao

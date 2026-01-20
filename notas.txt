@@ -1,5 +1,26 @@
-pegar 4 numeros
-primeiro numero -> pode ser de 15,25 a 28,28
-segundo numero -> tem que ser menor que o primeiro
-terceiro numero -> tem que ser menor que o segundo
-quarto numero -> tem que ser a soma dos 3 anteriores
+usar !(variavelX = variavelY)
+ao invés de variavelX != variavelY
+
+!Empty(variavel)
+no lugar de !(variavel == 0)
+
+tentar fazer variaveis abaixo de 20 caracteres
+
+em blocos de variaveis seguir o alinhamento do bloco
+ex:
+//bloco 1
+nNum1  :=
+nNum2  :=
+.
+.
+.
+nNum14 :=
+//bloco 2
+cNome1  := 
+cNome2  :=
+.
+.
+.
+cNome14 :=
+
+tentar deixar tudo na mesma tela
