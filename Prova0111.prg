@@ -1,4 +1,7 @@
 //Vitor Augusto Faria Ramalho
+set scoreBoard off
+set date Brit
+set epoch to 1940
 
 clear
 
@@ -10,6 +13,8 @@ calculo da mensalidade unico(ao invés de usar varios ifs)
 
 //Variaveis
 cNome             := space(20)
+dNascimento       := CToD("")
+dDataAtual        := Date()
 cCurso            := space(10)
 nSerie            := 0
 nValorMensalidade := 0
@@ -43,27 +48,29 @@ nNumeroDeDPs               := 0
 cMateriasQueFicouEmDP      := " "
 cAprovacao                 := "Aprovado"
 
-@ 00,00 to 09,79
+@ 00,00 to 10,79
 
 @ 00,25 say "Escola Municipal SG Sistemas"
 
 @ 01,01 say "Digite os seguintes dados do aluno: "
 @ 02,01 say "Nome................: "
-@ 03,01 say "Curso...............: "
-@ 04,01 say "Serie...............: "
-@ 05,01 say "Valor da mensalidade: "
-@ 06,01 say "Disciplina 1........: "
-@ 07,01 say "Disciplina 2........: "
-@ 08,01 say "Disciplina 3........: "
+@ 03,01 say "Data de nascimento..: "
+@ 04,01 say "Curso...............: "
+@ 05,01 say "Serie...............: "
+@ 06,01 say "Valor da mensalidade: "
+@ 07,01 say "Disciplina 1........: "
+@ 08,01 say "Disciplina 2........: "
+@ 09,01 say "Disciplina 3........: "
 
 
 @ 02,22 get cNome             picture "@!"           valid !Empty(cNome)
-@ 03,22 get cCurso            picture "@!"           valid !Empty(cCurso)
-@ 04,22 get nSerie            picture "9"            valid nSerie >= 1 .and. nSerie <= 8
-@ 05,22 get nValorMensalidade picture "@E 99,999.99" valid !Empty(nValorMensalidade)
-@ 06,22 get cDisciplinaUm     picture "@!"           valid !Empty(cDisciplinaUm)
-@ 07,22 get cDisciplinaDois   picture "@!"           valid !Empty(cDisciplinaDois)
-@ 08,22 get cDisciplinaTres   picture "@!"           valid !Empty(cDisciplinaTres)
+@ 03,22 get dNascimento                              valid dNascimento < Date()
+@ 04,22 get cCurso            picture "@!"           valid !Empty(cCurso)
+@ 05,22 get nSerie            picture "9"            valid nSerie >= 1 .and. nSerie <= 8
+@ 06,22 get nValorMensalidade picture "@E 99,999.99" valid !Empty(nValorMensalidade)
+@ 07,22 get cDisciplinaUm     picture "@!"           valid !Empty(cDisciplinaUm)
+@ 08,22 get cDisciplinaDois   picture "@!"           valid !Empty(cDisciplinaDois)
+@ 09,22 get cDisciplinaTres   picture "@!"           valid !Empty(cDisciplinaTres)
 read
 
 clear
@@ -207,26 +214,84 @@ if nNumeroDeDPs > 0
    end if
 end if
 
+if nNumeroDeDPs == 0
+   cMateriasQueFicouEmDP := "Sem materias em DP"
+endif
 
+@
 
 clear
+
+//variaveis de data
+nAnoAtual         := Year(dDataAtual)
+nMesAtual         := Month(dDataAtual)
+nDiaAtual         := Day(dDataAtual)
+nDiaDaSemanaAtual := DoW(dDataAtual)
+
+cMes              := space(10)
+cDiaDaSemana      := space(12)
+
+if nMesAtual == 1
+   cMes := "Janeiro"
+elseif nMesAtual == 2
+   cMes := "Fevereiro"
+elseif nMesAtual == 3
+   cMes := "Marco"
+elseif nMesAtual == 4
+   cMes := "Abril"
+elseif nMesAtual == 5
+   cMes := "Maio"
+elseif nMesAtual == 6
+   cMes := "Junho"
+elseif nMesAtual == 7
+   cMes := "Julho"
+elseif nMesAtual == 8
+   cMes := "Agosto"
+elseif nMesAtual == 9
+   cMes := "Setembro"
+elseif nMesAtual == 10
+   cMes := "Outubro"
+elseif nMesAtual == 11
+   cMes := "Novembro"
+elseif nMesAtual == 12
+   cMes := "Dezembro"
+endif
+
+if nDiaDaSemanaAtual == 1
+   cDiaDaSemana := "Domingo"
+elseif nDiaDaSemanaAtual == 2
+   cDiaDaSemana := "Segunda-feira"
+elseif nDiaDaSemanaAtual == 3
+   cDiaDaSemana := "Terca-feira"
+elseif nDiaDaSemanaAtual == 4
+   cDiaDaSemana := "Quarta-feira"
+elseif nDiaDaSemanaAtual == 5
+   cDiaDaSemana := "Quinta-feira"
+elseif nDiaDaSemanaAtual == 6
+   cDiaDaSemana := "Sexta-feira"
+elseif nDiaDaSemanaAtual == 7
+   cDiaDaSemana := "Sabado"
+endif
+
+
 //boletim
-@ 00,00 to 12,64
+@ 00,00 to 13,66
 
 @ 00,24 say "Boletim Escolar"
 @ 01,01 say "Aluno: " + cNome
-@ 02,01 say "Curso: " + cCurso
-@ 03,01 say "Serie: " + AllTrim(Str(nSerie))
-@ 04,01 say "---------------------------------------------------------------"
-@ 05,01 say "Disciplina 1: " + cDisciplinaUm
-@ 06,01 say "Media notas: " + AllTrim(Str(nMediaNotasDisciplinaUm)) color cAprovaDisciplinaUmNota
-@ 07,01 say "Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaUm)) color cAprovaDisciplinaUmFalta
-@ 05,21 say "| Disciplina 2: " + cDisciplinaDois
-@ 06,21 say "| Media notas: " + AllTrim(Str(nMediaNotasDisciplinaDois)) color cAprovaDisciplinaDoisNota
-@ 07,21 say "| Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaDois)) color cAprovaDisciplinaDoisFalta
-@ 05,42 say "| Disciplina: " + cDisciplinaTres
-@ 06,42 say "| Media notas: " + AllTrim(Str(nMediaNotasDisciplinaTres)) color cAprovaDisciplinaTresNota
-@ 07,42 say "| Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaTres)) color cAprovaDisciplinaTresFalta
-@ 09,01 say "Valor atualizado da mensaliadade: " + AllTrim(Str(nValorMensalidade))
-@ 10,01 say "Ficou com Dependencia nas seguintes materia(s):" + cMateriasQueFicouEmDP
-@ 11,01 say "Situacao: " + cAprovacao
+@ 02,01 say "Maringa, dia " + AllTrim(Str(nDiaAtual)) + " de " + cMes + " de " + AllTrim(Str(nAnoAtual)) + ", " + cDiaDaSemana
+@ 03,01 say "Curso: " + cCurso
+@ 04,01 say "Serie: " + AllTrim(Str(nSerie))
+@ 05,01 say "-----------------------------------------------------------------"
+@ 06,01 say "Disciplina 1: " + cDisciplinaUm
+@ 07,01 say "Media notas: " + AllTrim(Str(nMediaNotasDisciplinaUm)) color cAprovaDisciplinaUmNota
+@ 08,01 say "Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaUm)) color cAprovaDisciplinaUmFalta
+@ 06,21 say "| Disciplina 2: " + cDisciplinaDois
+@ 07,21 say "| Media notas: " + AllTrim(Str(nMediaNotasDisciplinaDois)) color cAprovaDisciplinaDoisNota
+@ 08,21 say "| Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaDois)) color cAprovaDisciplinaDoisFalta
+@ 06,42 say "| Disciplina: " + cDisciplinaTres
+@ 07,42 say "| Media notas: " + AllTrim(Str(nMediaNotasDisciplinaTres)) color cAprovaDisciplinaTresNota
+@ 08,42 say "| Media Faltas: " + AllTrim(Str(nMediaFaltasDisciplinaTres)) color cAprovaDisciplinaTresFalta
+@ 10,01 say "Valor atualizado da mensaliadade: " + AllTrim(Str(nValorMensalidade))
+@ 11,01 say "Ficou com Dependencia nas seguintes materia(s):" + cMateriasQueFicouEmDP
+@ 12,01 say "Situacao: " + cAprovacao

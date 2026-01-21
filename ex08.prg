@@ -1,10 +1,14 @@
 set scoreBoard off
+set date to brit
+set epoch to 1940
 
 clear
 
 cProdutoUm      := space(20)
 cProdutoDois    := space(20)
 cProdutoTres    := space(20)
+dDataDoPedido   := CToD("")
+dDataDaVenda    := date()
 nQuantidadeUm   := 0 // N/5/2 '99.99'
 nQuantidadeDois := 0 // N/5/2 '99.99'
 nQuantidadeTres := 0 // N/5/2 '99.99'
@@ -27,6 +31,7 @@ nTotal          := 0
 @ 04,10 say "   2   |                      |       |        |            "
 @ 05,10 say "   3   |                      |       |        |            "
 @ 07,51 say "Total:  "
+@ 08,10 say "Data do pedido: "
 
 @ 03,19 get cProdutoUm    picture '@!' valid !Empty(cProdutoUm)
 @ 03,44 get nQuantidadeUm picture "@E 99" valid nQuantidadeUm > 0
@@ -47,6 +52,10 @@ nSubTotalDois := nQuantidadeDois * nValorDois
 @ 05,50 get nValorTres      picture '@E 999.99' valid nValorTres > 0
 read
 nSubTotalTres := nQuantidadeTres * nValorTres
+
+@ 07,01 say DToC(dDataDaVenda)
+@ 08,26 get dDataDoPedido valid !(dDataDoPedido > dDataDaVenda)
+read
 
 @ 05,59 say AllTrim(Str(nSubTotalTres))
 nTotal += nSubTotalUm + nSubTotalDois + nSubTotalTres
