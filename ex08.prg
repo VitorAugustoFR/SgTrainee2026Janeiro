@@ -2,66 +2,116 @@ set scoreBoard off
 set date to brit
 set epoch to 1940
 
-clear
+do while .t.
+   clear
 
-cProdutoUm      := space(20)
-cProdutoDois    := space(20)
-cProdutoTres    := space(20)
-dDataDoPedido   := CToD("")
-dDataDaVenda    := date()
-nQuantidadeUm   := 0 // N/5/2 '99.99'
-nQuantidadeDois := 0 // N/5/2 '99.99'
-nQuantidadeTres := 0 // N/5/2 '99.99'
-nValorUm        := 0 // N/6/2 '999.99'
-nValorDois      := 0 // N/6/2 '999.99'
-nValorTres      := 0 // N/6/2 '999.99'
-nSubTotalUm     := 0
-nSubTotalDois   := 0
-nSubTotalTres   := 0
-nTotal          := 0
+   cProdutoUm      := space(20)
+   cProdutoDois    := space(20)
+   cProdutoTres    := space(20)
+   dDataDoPedido   := CToD("")
+   dDataDaVenda    := date()
+   nQuantidadeUm   := 0 // N/5/2 '99.99'
+   nQuantidadeDois := 0 // N/5/2 '99.99'
+   nQuantidadeTres := 0 // N/5/2 '99.99'
+   nValorUm        := 0 // N/6/2 '999.99'
+   nValorDois      := 0 // N/6/2 '999.99'
+   nValorTres      := 0 // N/6/2 '999.99'
+   nSubTotalUm     := 0
+   nSubTotalDois   := 0
+   nSubTotalTres   := 0
+   nTotal          := 0
 
-//@ 00,00 to 10,79
+   //@ 00,00 to 10,79
 
-@ 01,09 to 06,70
+   @ 01,09 to 06,70
 
-@ 01,29 say "MERCEARIA DO SEU ZE"
+   @ 01,29 say "MERCEARIA DO SEU ZE"
 
-@ 02,10 say " Index |        Produto       |  QNT  |  Valor | Sub. Total "
-@ 03,10 say "   1   |                      |       |        |            "
-@ 04,10 say "   2   |                      |       |        |            "
-@ 05,10 say "   3   |                      |       |        |            "
-@ 07,51 say "Total:  "
-@ 08,10 say "Data do pedido: "
+   @ 02,10 say " Index |        Produto       |  QNT  |  Valor | Sub. Total "
+   @ 03,10 say "   1   |                      |       |        |            "
+   @ 04,10 say "   2   |                      |       |        |            "
+   @ 05,10 say "   3   |                      |       |        |            "
+   @ 07,51 say "Total:  "
+   @ 08,10 say "Data do pedido: "
 
-@ 03,19 get cProdutoUm    picture '@!' valid !Empty(cProdutoUm)
-@ 03,44 get nQuantidadeUm picture "@E 99" valid nQuantidadeUm > 0
-@ 03,50 get nValorUm      picture '@E 999.99' valid nValorUm > 0
-read
-nSubTotalUm := nQuantidadeUm * nValorUm
-@ 03,59 say AllTrim(Str(nSubTotalUm))
+   @ 03,19 get cProdutoUm    picture '@!' valid !Empty(cProdutoUm)
+   @ 03,44 get nQuantidadeUm picture "@E 99" valid nQuantidadeUm > 0
+   @ 03,50 get nValorUm      picture '@E 999.99' valid nValorUm > 0
+   read
 
-@ 04,19 get cProdutoDois    picture '@!' valid !Empty(cProdutoDois)
-@ 04,44 get nQuantidadeDois picture "@E 99" valid nQuantidadeDois > 0
-@ 04,50 get nValorDois      picture '@E 999.99' valid nValorDois > 0
-read
-nSubTotalDois := nQuantidadeDois * nValorDois
-@ 04,59 say AllTrim(Str(nSubTotalDois))
+   if LastKey() == 27
+      nMenuOpcao := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+      if nMenuOpcao == 1
 
-@ 05,19 get cProdutoTres    picture '@!' valid !Empty(cProdutoTres)
-@ 05,44 get nQuantidadeTres picture "@E 99" valid nQuantidadeTres > 0
-@ 05,50 get nValorTres      picture '@E 999.99' valid nValorTres > 0
-read
-nSubTotalTres := nQuantidadeTres * nValorTres
+      elseif nMenuOpcao == 2
+         loop
+      elseif nMenuOpcao == 3
+         exit
+      endif
+   endif
 
-@ 07,01 say DToC(dDataDaVenda)
-@ 08,26 get dDataDoPedido valid !(dDataDoPedido > dDataDaVenda)
-read
+   nSubTotalUm := nQuantidadeUm * nValorUm
+   @ 03,59 say AllTrim(Str(nSubTotalUm))
 
-@ 05,59 say AllTrim(Str(nSubTotalTres))
-nTotal += nSubTotalUm + nSubTotalDois + nSubTotalTres
+   @ 04,19 get cProdutoDois    picture '@!' valid !Empty(cProdutoDois)
+   @ 04,44 get nQuantidadeDois picture "@E 99" valid nQuantidadeDois > 0
+   @ 04,50 get nValorDois      picture '@E 999.99' valid nValorDois > 0
+   read
 
-@ 07,59 say AllTrim(Str(nTotal))
+   if LastKey() == 27
+      nMenuOpcao2 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+      if nMenuOpcao2 == 1
 
+      elseif nMenuOpcao2 == 2
+         loop
+      elseif nMenuOpcao2 == 3
+         exit
+      endif
+   endif
+
+   nSubTotalDois := nQuantidadeDois * nValorDois
+   @ 04,59 say AllTrim(Str(nSubTotalDois))
+
+   @ 05,19 get cProdutoTres    picture '@!' valid !Empty(cProdutoTres)
+   @ 05,44 get nQuantidadeTres picture "@E 99" valid nQuantidadeTres > 0
+   @ 05,50 get nValorTres      picture '@E 999.99' valid nValorTres > 0
+   read
+
+   if LastKey() == 27
+      nMenuOpcao3 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+      if nMenuOpcao3 == 1
+
+      elseif nMenuOpcao3 == 2
+         loop
+      elseif nMenuOpcao3 == 3
+         exit
+      endif
+   endif
+
+   nSubTotalTres := nQuantidadeTres * nValorTres
+
+   @ 07,01 say DToC(dDataDaVenda)
+   @ 08,26 get dDataDoPedido valid !(dDataDoPedido > dDataDaVenda)
+   read
+
+   if LastKey() == 27
+      nMenuOpcao4 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+      if nMenuOpcao4 == 1
+
+      elseif nMenuOpcao4 == 2
+         loop
+      elseif nMenuOpcao4 == 3
+         exit
+      endif
+   endif
+
+   @ 05,59 say AllTrim(Str(nSubTotalTres))
+   nTotal += nSubTotalUm + nSubTotalDois + nSubTotalTres
+
+   @ 07,59 say AllTrim(Str(nTotal))
+
+   @ 08,01 say "A previsao de entrega do pedido e: " + DToC(dDataDaVenda + 30)
+enddo
 
 /*
 //Variaveis Usuario

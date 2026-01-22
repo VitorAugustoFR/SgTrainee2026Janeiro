@@ -14,6 +14,17 @@ do while .t.
    @ 06,01 get nSegundoNumero
    read
 
+   if LastKey() == 27
+      nMenuOpcao := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+      if nMenuOpcao == 1
+
+      elseif nMenuOpcao == 2
+         loop
+      elseif nMenuOpcao == 3
+         exit
+      endif
+   endif
+
    if cOperacao == "+"
       nResultado += nSegundoNumero
    elseif cOperacao == "-"
@@ -32,6 +43,17 @@ do while .t.
    @ 09,33 get lEmOperacao picture '@!' valid lEmOperacao $ "SN"
    read
 
+   if LastKey() == 27
+      nMenuOpcao2 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+      if nMenuOpcao2 == 1
+
+      elseif nMenuOpcao2 == 2
+         loop
+      elseif nMenuOpcao2 == 3
+         exit
+      endif
+   endif
+
 
    do While lEmOperacao == "S"
       clear
@@ -43,6 +65,17 @@ do while .t.
       @ 06,01 get cOperacao
       @ 07,01 get nSegundoNumero
       read
+
+      if LastKey() == 27
+         nMenuOpcao3 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+         if nMenuOpcao3 == 1
+
+         elseif nMenuOpcao3 == 2
+            loop
+         elseif nMenuOpcao3 == 3
+            exit
+         endif
+      endif
 
       if cOperacao == "+"
          nResultado += nSegundoNumero
@@ -64,6 +97,17 @@ do while .t.
 
       @ 03,33 get lEmOperacao picture '@!' valid lEmOperacao $ "SN"
       read
+
+      if LastKey() == 27
+         nMenuOpcao4 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+         if nMenuOpcao4 == 1
+
+         elseif nMenuOpcao4 == 2
+            loop
+         elseif nMenuOpcao4 == 3
+            exit
+         endif
+      endif
 
    enddo
    exit
