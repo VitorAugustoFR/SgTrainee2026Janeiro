@@ -29,18 +29,7 @@ do while .t.
       read
 
       if LastKey() == 27
-         nMenuOpcao4 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
-         if nMenuOpcao4 == 1
-
-         elseif nMenuOpcao4 == 2
-            loop
-         elseif nMenuOpcao4 == 3
-            exit
-         endif
-      endif
-
-      if LastKey() == 27
-         nMenuOpcao2 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
+         nMenuOpcao2 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"}, 'G/N')
          if nMenuOpcao2 == 1
 
          elseif nMenuOpcao2 == 2

@@ -5,174 +5,182 @@ set epoch to 1940
 do while .t.
    clear
 
-   cProdutoUm      := space(20)
-   cProdutoDois    := space(20)
-   cProdutoTres    := space(20)
-   dDataDoPedido   := CToD("")
-   dDataDaVenda    := date()
-   nQuantidadeUm   := 0 // N/5/2 '99.99'
-   nQuantidadeDois := 0 // N/5/2 '99.99'
-   nQuantidadeTres := 0 // N/5/2 '99.99'
-   nValorUm        := 0 // N/6/2 '999.99'
-   nValorDois      := 0 // N/6/2 '999.99'
-   nValorTres      := 0 // N/6/2 '999.99'
-   nSubTotalUm     := 0
-   nSubTotalDois   := 0
-   nSubTotalTres   := 0
-   nTotal          := 0
+   nLoopProdutos  := 0 
+   nLoopPagamento := 0
+
+   //Cliente
+   cNome         := space(20)
+   dDataDoPedido := CToD("")
+
+   //Produto
+   nIndex        := 1
+   cProduto      := space(20)
+   dDataDaVenda  := date()
+   nQuantidade   := 0 // N/5/2 '99.99'
+   nValor        := 0 // N/6/2 '999.99'
+   nSubTotal     := 0
+   nTotal        := 0
+
+   nLinha        := 3
+
+   //Pagamento
+   cMetodoDePagamento   := space(1)
+   nPagamentoAvista     := 0
+   nNumeroDeParcelas    := 0
+   nJuros               := 0.01
+   nValorTotalParcela   := 0
+   nValorParcela        := 0
+   dVencimentoDaParcela := dDataDaVenda
 
    //@ 00,00 to 10,79
+   @ 00,00 to 03,79
 
-   @ 01,09 to 06,70
-
-   @ 01,29 say "MERCEARIA DO SEU ZE"
-
-   @ 02,10 say " Index |        Produto       |  QNT  |  Valor | Sub. Total "
-   @ 03,10 say "   1   |                      |       |        |            "
-   @ 04,10 say "   2   |                      |       |        |            "
-   @ 05,10 say "   3   |                      |       |        |            "
-   @ 07,51 say "Total:  "
-   @ 08,10 say "Data do pedido: "
-
-   @ 03,19 get cProdutoUm    picture '@!' valid !Empty(cProdutoUm)
-   @ 03,44 get nQuantidadeUm picture "@E 99" valid nQuantidadeUm > 0
-   @ 03,50 get nValorUm      picture '@E 999.99' valid nValorUm > 0
+   @ 00,25 say "MERCEARIA DO SEU ZE"
+   @ 01,01 say "Digite seu nome........: "
+   @ 02,01 say "Digite a data do pedido: "
+   
+   @ 01,25 get cNome         valid !Empty(cNome)
+   @ 02,25 get dDataDoPedido valid !Empty(dDataDoPedido) .and. dDataDoPedido < dDataDaVenda
    read
-
    if LastKey() == 27
-      nMenuOpcao := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
-      if nMenuOpcao == 1
-
-      elseif nMenuOpcao == 2
-         loop
-      elseif nMenuOpcao == 3
+      nMenuOpcao1 := Alert("Deseja sair?",{"Sim", "Nao"}, 'W/RB')
+      if nMenuOpcao1 == 1 
          exit
       endif
    endif
 
-   nSubTotalUm := nQuantidadeUm * nValorUm
-   @ 03,59 say AllTrim(Str(nSubTotalUm))
+   nLoopProdutos := 1
 
-   @ 04,19 get cProdutoDois    picture '@!' valid !Empty(cProdutoDois)
-   @ 04,44 get nQuantidadeDois picture "@E 99" valid nQuantidadeDois > 0
-   @ 04,50 get nValorDois      picture '@E 999.99' valid nValorDois > 0
-   read
-
-   if LastKey() == 27
-      nMenuOpcao2 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
-      if nMenuOpcao2 == 1
-
-      elseif nMenuOpcao2 == 2
-         loop
-      elseif nMenuOpcao2 == 3
-         exit
-      endif
-   endif
-
-   nSubTotalDois := nQuantidadeDois * nValorDois
-   @ 04,59 say AllTrim(Str(nSubTotalDois))
-
-   @ 05,19 get cProdutoTres    picture '@!' valid !Empty(cProdutoTres)
-   @ 05,44 get nQuantidadeTres picture "@E 99" valid nQuantidadeTres > 0
-   @ 05,50 get nValorTres      picture '@E 999.99' valid nValorTres > 0
-   read
-
-   if LastKey() == 27
-      nMenuOpcao3 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
-      if nMenuOpcao3 == 1
-
-      elseif nMenuOpcao3 == 2
-         loop
-      elseif nMenuOpcao3 == 3
-         exit
-      endif
-   endif
-
-   nSubTotalTres := nQuantidadeTres * nValorTres
-
-   @ 07,01 say DToC(dDataDaVenda)
-   @ 08,26 get dDataDoPedido valid !(dDataDoPedido > dDataDaVenda)
-   read
-
-   if LastKey() == 27
-      nMenuOpcao4 := Alert("O que deseja fazer?",{"Continuar", "Voltar", "Sair"})
-      if nMenuOpcao4 == 1
-
-      elseif nMenuOpcao4 == 2
-         loop
-      elseif nMenuOpcao4 == 3
-         exit
-      endif
-   endif
-
-   @ 05,59 say AllTrim(Str(nSubTotalTres))
-   nTotal += nSubTotalUm + nSubTotalDois + nSubTotalTres
-
-   @ 07,59 say AllTrim(Str(nTotal))
-
-   @ 08,01 say "A previsao de entrega do pedido e: " + DToC(dDataDaVenda + 30)
-enddo
-
-/*
-//Variaveis Usuario
-cNomeUsuario    := space(8)
-cSenhaUsuario   := space(8)
-//"ARRAY" de senha e usuarios
-cNomesUsuarios  := space(40)
-cSenhasUsuarios := space(40)
-//Variaveis produto
-cNomeProduto    := space(15)
-nValorDoProduto := 0
-nQuantidade     := 0
-nValorTotal     := 0
-//Variaveis variadas
-nLoopPrincipal  := 1
-
-do while nLoopPrincipal == 1
    clear
-   cLogar          := space(1)
-   cCriar          := space(1)
-
-   @ 00,00 to 07,79
-   @ 00,29 say "MERCADINHO DO SEU ZE!"
-   @ 01,01 say "Deseja Logar...............? "
-   @ 02,01 say "Deseja criar uma conta nova? "
-
-   @ 01,29 get cLogar picture '@!' valid cLogar $ 'SN' 
-   @ 02,29 get cCriar picture '@!' valid cCriar $ 'SN' 
-   read
-
-   do while cCriar $ 'S'
-      clear
-      @ 00,00 to 06,79
-      @ 00,32 say "CRIE SUA CONTA!"
-      @ 01,01 say "Digite seu nome de usuario: "
-      @ 02,01 say "Digite sua senha..........: "
-
-      @ 01,28 get cNomeUsuario  picture '@!'
-      @ 02,28 get cSenhaUsuario picture '@!'
-      read
-
-      @ 04,01 say "Seu login e senha serao estes mesmos? "
-
-      @ 04,38 get cLogar picture '@!' valid cLogar $ 'SN'
-      read
-
-      if cLogar $ 'S'
-         cNomesUsuarios  += cNomeUsuario
-         cSenhasUsuarios += cSenhaUsuario
-         cCriar := 'N'
-      else
-         loop
+   //Produtos
+   do while .t.
+      if nLinha > 23
+         clear
+         nLinha := 3
       endif
 
-      InKey(0)
+      @ 01,09 to 24,70
+      @ 01,29 say "MERCEARIA DO SEU ZE"
+      @ 02,10 say " Index |        Produto       |  QNT  |  Valor | Sub. Total "
+
+      @ nLinha,10 say "   " + AllTrim(Str(nIndex)) + "   |                      |       |        |            "
+
+      @ nLinha,19 get cProduto    picture '@!' valid !Empty(cProduto)
+      @ nLinha,44 get nQuantidade picture "@E 99" valid nQuantidade > 0
+      @ nLinha,50 get nValor      picture '@E 999.99' valid nValor > 0
+      read
+      if LastKey() == 27
+         nMenuOpcao2 := Alert("O que deseja fazer?",{"Continuar", "Abandonar", "Faturar"}, 'W/RB')
+         if nMenuOpcao2 == 1
+
+         elseif nMenuOpcao2 == 2
+            exit
+         elseif nMenuOpcao2 == 3
+            if nTotal > 0
+               nLoopPagamento := 1
+               exit
+            else
+               Alert("Valor precisa ser maior que zero para faturar!", 'W/RB')
+               loop
+            endif
+         endif
+      endif
+
+      nSubTotal := nQuantidade * nValor
+      @ nLinha,59 say AllTrim(Str(nSubTotal))
+
+      nTotal += nSubTotal
+      nLinha++
+      nIndex++
    enddo
 
-   do while cLogar $ 'S'
-      
-   enddo
+   clear
 
-   InKey(0)
+   //Pagamento
+   do while nLoopPagamento == 1
+      @ 01,01 say "Valor a pagar: " + AllTrim(Str(nTotal))
+      @ 02,01 say "Quar metodo de pagamento deseja usar? (P)arcelado (A)vista "
+
+      @ 03,01 get cMetodoDePagamento picture '@!' valid cMetodoDePagamento $ "PA"
+      read
+      if LastKey() == 27
+         nMenuOpcao3 := Alert("Deseja", {"Continuar", "Abandonar"}, 'W/RB')
+         if nMenuOpcao3 == 1
+
+         elseif nMenuOpcao3 == 2
+            nLoopPagamento := 0
+            exit
+         endif
+      endif
+
+      if cMetodoDePagamento == "A"
+         clear
+         @ 00,00 to 4,79
+         @ 00,31 say "PAGAMENTO A VISTA"
+         
+         @ 01,01 say "Seu pagamento: "
+
+         @ 01,15 get nPagamentoAvista picture '@E 999,999,999.99' valid nPagamentoAvista > nTotal
+         read
+         if LastKey() == 27
+            nMenuOpcao4 := Alert("Deseja selecionar outro metodo de pagamento?", {"Sim", "Nao"}, 'W/RB')
+            if nMenuOpcao4 == 1
+               loop
+            endif
+         endif
+
+         @ 03,01 say "Seu troco: " + AllTrim(Str(nPagamentoAvista - nTotal))
+         Inkey(0)
+      endif
+
+      if cMetodoDePagamento == "P"
+         clear
+         @ 00,00 to 24,79
+         @ 00,30 say "PAGAMENTO PARCELADO"
+         @ 01,01 say "Digite em quantas vezes quer pagar(maximo 12): "
+
+         @ 01,47 get nNumeroDeParcelas picture '99' valid nNumeroDeParcelas <= 12 .and. nNumeroDeParcelas > 0
+         read
+         if LastKey() == 27
+            nMenuOpcao5 := Alert("Deseja selecionar outro metodo de pagamento?", {"Sim", "Nao"}, 'W/RB')
+            if nMenuOpcao6 == 1
+               loop
+            endif
+         endif
+
+         nValorTotalParcela := nTotal
+         if nNumeroDeParcelas > 3
+            nValorTotalParcela += nValorTotalParcela * (nJuros * nNumeroDeParcelas)
+         endif
+
+         @ 03,11 say "Valor da parcela | Vencimento da parcela"
+
+         nValorParcela := nValorTotalParcela / nNumeroDeParcelas
+         @ 02,10 to 16, 61
+         for i := 1 to nNumeroDeParcelas
+            dVencimentoDaParcela := dDataDaVenda + 30 * i
+            @ i+3,11 say AllTrim(Str(nValorParcela))
+            @ i+3,28 say " | "
+            @ i+3,31 say DToC(dVencimentoDaParcela)
+         next
+         Inkey(0)
+
+      endif
+
+      exit
+   enddo
+   if nPagamentoAvista > 0 .or. nValorTotalParcela > 0 
+      clear
+      @ 00,00 to 07,79
+      @ 00,34 say "NOTA FISCAL"
+
+      @ 01,01 say "Cliente...........................: " + cNome
+      @ 02,01 say "Data em que o pedido foi realizado: " + DToC(dDataDoPedido)
+      @ 03,01 say "Data da venda.....................: " + DToC(dDataDaVenda)
+      @ 04,01 say "Quantidade de produtos............: " + AllTrim(Str(nIndex))
+      @ 05,01 say "Data da entrega...................: " + DToC(dDataDaVenda + 7) 
+      @ 06,01 say "Valor total do pedido.............: " + AllTrim(Str(nTotal))
+      Inkey(0)
+      exit
+   endif
 enddo
-*/
