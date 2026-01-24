@@ -3,5 +3,5 @@ set epoch to 1940
 
 clear
 
-para pegar o ultio dia do ultimo mes
-CToD(1, Motnh, year) - 1
+dData := CToD("2/2/2022")
+@ 01,01 say DToC(dData) 
