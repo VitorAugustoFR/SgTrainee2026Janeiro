@@ -31,6 +31,8 @@ do while .t.
    nContagemCarregamento := 0
    cBarraDeCarregamento  := space(1)
    cContagemVisual       := "########"
+   nIndexadorCuidar      := 0
+   nIndexadorVital       := 0
 
 
    @ 00,00 to 02,79
@@ -104,69 +106,71 @@ do while .t.
 
    //CUIDAR
    if nIdade < 35
-      nValorFinalCuidar -= nValorBaseCuidar * 0.15
+      nIndexadorCuidar -= 0.15
    endif
    if nIdade > 55
-      nValorFinalCuidar += nValorBaseCuidar * 0.25
+      nIndexadorCuidar += 0.25
    endif
    if cSexo == "M"
-      nValorFinalCuidar += nValorBaseCuidar * 0.1
+      nIndexadorCuidar +=  0.1
    endif
    if cSexo == "F"
-      nValorFinalCuidar -= nValorBaseCuidar * 0.1
+      nIndexadorCuidar -= 0.1
    endif
    if nImc > 28
-      nValorFinalCuidar += nValorBaseCuidar * 0.2
+      nIndexadorCuidar += 0.2
    endif
    if cFumante == "S"
-      nValorFinalCuidar += nValorBaseCuidar * 0.3
+      nIndexadorCuidar += 0.3
    endif
    if cTipoDoPlano == "A"
-      nValorFinalCuidar += nValorBaseCuidar * 0.35
+      nIndexadorCuidar += 0.35
    endif
    if cTipoDoPlano == "V"
-      nValorFinalCuidar += nValorBaseCuidar * 0.6
+      nIndexadorCuidar += 0.6
    endif
    if cAbrangencia == "N"
-      nValorFinalCuidar += nValorBaseCuidar * 0.2
+      nIndexadorCuidar += 0.2
    endif
    if nMesDaCotacao == 6
-      nValorFinalCuidar -= nValorBaseCuidar * 0.15
+      nIndexadorCuidar -= 0.15
    endif
 
    //Vital
    if nIdade < 28
-      nValorFinalVital -= nValorBaseVital * 0.2
+      nIndexadorVital -= 0.2
    endif
    if nIdade > 62
-      nValorFinalVital += nValorBaseVital * 0.3
+      nIndexadorVital += 0.3
    endif
    if cSexo == "M"
-      nValorFinalVital -= nValorBaseVital * 0.1
+      nIndexadorVital -= 0.1
    endif
    if cSexo == "F"
-      nValorFinalVital += nValorBaseVital * 0.15
+      nIndexadorVital += 0.15
    endif
    if nImc > 26
-      nValorFinalVital += nValorBaseVital * 0.15
+      nIndexadorVital += 0.15
    endif
    if cFumante == "S"
-      nValorFinalVital += nValorBaseVital * 0.35
+      nIndexadorVital += 0.35
    endif
    if cTipoDoPlano == "A"
-      nValorFinalVital += nValorBaseVital * 0.3
+      nIndexadorVital += 0.3
    endif
    if cTipoDoPlano == "V"
-      nValorFinalVital += nValorBaseVital * 0.5
+      nIndexadorVital += 0.5
    endif
    if cAbrangencia == "N"
-      nValorFinalVital += nValorBaseVital * 0.15
+      nIndexadorVital += 0.15
    endif
    if nMesDaCotacao == 11
-      nValorFinalVital -= nValorBaseVital * 0.2
+      nIndexadorVital -= 0.2
    endif
 
    //calculos finais
+   nValorFinalCuidar      := nValorBaseCuidar * (1 + nIndexadorCuidar)
+   nValorFinalVital       := nValorBaseVital * (1 + nIndexadorVital)
    nValorTrimestralCuidar := nValorFinalCuidar * 3
    nValorAnualCuidar      := nValorFinalCuidar * 12
    nValorTrimestralVital  := nValorFinalVital * 3

@@ -14,13 +14,13 @@ do while .t.
    nHomensAptos                    := 0
    nMulheresAptas                  := 0
    nValorTotalRemuneracao          := 0
-   nHomensComMaisDeNoventaEUm      := 0
-   nMulheresAntesDoisMilETreze     := 0
+   nHomensMaisDe91                 := 0
+   nMulheresAntes2013              := 0
    nMulheresQuePagamIRRF           := 0
    nPercentualMulheresQuePagamIRRF := 0 
 
    @ 00,00 to 02,79
-   @ 00,33  say "CONTROLE INSS"
+   @ 00,33 say "CONTROLE INSS"
    @ 01,01 say "Digite o numero de empregados a serem analaizados: "
 
    @ 01,51 get nNumeroDeEmpregados valid nNumeroDeEmpregados > 0
@@ -80,6 +80,7 @@ do while .t.
       end if
 
       //Variaveis para calculos
+      nIndexador := 0
       //Salario
       nSalarioFinal := nValorSalarioBase
       nSalarioFinal += nValorSalarioBase * (nAdicionalInsalubridade / 100)
@@ -155,18 +156,18 @@ do while .t.
 
       //Remuneracao aposentadoria
       if !(nAnoDemissao < 2009) .or. (nAnoDemissao - nTempoDeCotribuicao) > 2012
-         nValorAposentadoria += nValorSalarioBase * 0.02
+         nIndexador += 0.02
       end if
       
       if !(nAnoDemissao < 2015) .or. (nAnoDemissao - nTempoDeCotribuicao) > 2018
-         nValorAposentadoria -= nValorSalarioBase * 0.05
+         nIndexador -= 0.05
       end if
 
       if nValorLimiteIRRF < nValorSalarioBase
-         nValorAposentadoria -= nSalarioFinal * 0.09
+         nIndexador -= 0.09
       end if
       nEmpregadoAtual++
-      nValorTotalRemuneracao += nValorAposentadoria
+      nValorTotalRemuneracao += nValorSalarioBase * (1 + nIndexador)
       
 
       @ 12,00 to 17,79
