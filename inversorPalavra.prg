@@ -1,5 +1,3 @@
-SetMode(35,80)
-
 clear
 
 cPalavra          := space(20)

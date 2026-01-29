@@ -29,8 +29,8 @@ do while .t.
       nMenuOpcao1 := Alert("Deseja sair?",{"Sim", "Nao"})
       if nMenuOpcao1 == 1
          exit
-      end if
-   end if
+      endif
+   endif
 
    do while nEmpregadoAtual <= nNumeroDeEmpregados
 
@@ -76,8 +76,8 @@ do while .t.
             nEstaCancelado := 1
          elseif nMenuOpcao2 == 3
             exit
-         end if
-      end if
+         endif
+      endif
 
       //Variaveis para calculos
       nIndexador := 0
@@ -114,66 +114,60 @@ do while .t.
       if !(nMesNascimento >= nMesAtual)
          if !(nDiaNascimento >= nDiaAtual)
             nIdade--
-         end if
-      end if
+         endif
+      endif
       //Tempo de contribuicao
       if !(nMesAdmissao >= nMesDemissao)
          if !(nDiaAdmissao >= nDiaDemissao)
             nTempoDeCotribuicao--
-         end if
-      end if
+         endif
+      endif
 
 
       //Aptidao a aposentadoria
       if cSexo == "M"
          if nIdade >= 61 .and. nTempoDeCotribuicao >= 30
             nHomensAptos++
-         else
-            Alert("Nao esta apto a receber aposentadoria!")
-            loop
-         end if
+         endif
 
          if nIdade > 91
             nHomensComMaisDeNoventaEUm++
-         end if
-      end if
+         endif
+      endif
       if cSexo == "F"
          if nIdade >= 58 .and. nTempoDeCotribuicao >= 20
             nMulheresAptas++
-         else
-            Alert("Nao esta apta a receber aposentadoria!")
-            loop
-         end if
+         endif
 
          if nAnoAdmissao < 2013
             nMulheresAntesDoisMilETreze++
-         end if
+         endif
 
          if nValorLimiteIRRF < nValorSalarioBase
             nMulheresQuePagamIRRF++
-         end if
-      end if
+         endif
+      endif
 
       //Remuneracao aposentadoria
       if !(nAnoDemissao < 2009) .or. (nAnoDemissao - nTempoDeCotribuicao) > 2012
          nIndexador += 0.02
-      end if
+      endif
       
       if !(nAnoDemissao < 2015) .or. (nAnoDemissao - nTempoDeCotribuicao) > 2018
          nIndexador -= 0.05
-      end if
+      endif
 
       if nValorLimiteIRRF < nValorSalarioBase
          nIndexador -= 0.09
-      end if
+      endif
       nEmpregadoAtual++
       nValorTotalRemuneracao += nValorSalarioBase * (1 + nIndexador)
       
 
       @ 12,00 to 17,79
-      @ 12,18 say "DADOS COLABORADOR(A)..: " + AllTrim(cNomeColaborador)
-      @ 13,01 say "Idade.................: " + AllTrim(Str(nIdade))
-      @ 14,01 say "Tempo de contribuicao.: " + AllTrim(Str(nTempoDeCotribuicao))
+      @ 12,18 say "DADOS COLABORADOR(A)..: "   + AllTrim(cNomeColaborador)
+      @ 13,01 say "Idade.................: "   + AllTrim(Str(nIdade))
+      @ 14,01 say "Tempo de contribuicao.: "   + AllTrim(Str(nTempoDeCotribuicao))
       @ 15,01 say "Aposentadoria recebida: R$" + Transform(nValorAposentadoria, "@E 99,999,999.99")
       @ 16,01 say "Salario mensal........: R$" + Transform(nSalarioFinal, "@E 9,999,999.99")
       Inkey(0)
@@ -181,7 +175,7 @@ do while .t.
 
    nTotalColaboradores             := nHomensAptos + nMulheresAptas
    nPercentualHomens               := (nHomensAptos * 100) / nTotalColaboradores
-   nPercentualMulheres             := (nMulheresAptas* 100) / nTotalColaboradores
+   nPercentualMulheres             := (nMulheresAptas * 100) / nTotalColaboradores
    nPercentualMulheresQuePagamIRRF := (nMulheresQuePagamIRRF * 100) / nMulheresAptas
 
    clear
@@ -190,10 +184,10 @@ do while .t.
    @ 00,20 say "RELATORIO DOS COLABORADORES APOSENTADOS"
    
    @ 01,24 say "Relacao entre homens e mulheres"
-   @ 02,01 say "Homens.................................: " + AllTrim(Str(nPercentualHomens)) + "%           Mulheres: " + AllTrim(Str(nPercentualMulheres)) + "%"
+   @ 02,01 say "Homens.................................: "   + AllTrim(Str(nPercentualHomens)) + "%           Mulheres: " + AllTrim(Str(nPercentualMulheres)) + "%"
    @ 03,01 say "Valor total da remuneracao.............: R$" + Transform(nValorTotalRemuneracao, "@E 99,999,999.99")
-   @ 04,01 say "Homens com mais de 91 anos.............: " + AllTrim(Str(nHomensComMaisDeNoventaEUm))
-   @ 05,01 say "Mulheres admitidas antes do ano de 2013: " + AllTrim(Str(nMulheresAntesDoisMilETreze))
-   @ 06,01 say "Porcentagem de mulheres que pagam IRRF.: " + AllTrim(Str(nPercentualMulheresQuePagamIRRF))
+   @ 04,01 say "Homens com mais de 91 anos.............: "   + AllTrim(Str(nHomensComMaisDeNoventaEUm))
+   @ 05,01 say "Mulheres admitidas antes do ano de 2013: "   + AllTrim(Str(nMulheresAntesDoisMilETreze))
+   @ 06,01 say "Porcentagem de mulheres que pagam IRRF.: "   + AllTrim(Str(nPercentualMulheresQuePagamIRRF))
    Inkey(0)
 enddo

@@ -24,3 +24,7 @@ cNome2  :=
 cNome14 :=
 
 tentar deixar tudo na mesma tela
+
+val muda de str para int
+
+nopcao

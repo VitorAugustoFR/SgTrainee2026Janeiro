@@ -1,47 +1,74 @@
 clear
 
 nTom := 0
+//C4
+nNotas     := Array(12)
+nNotas[1]  := 261.63
+nNotas[2]  := 277.18
+nNotas[3]  := 293.66
+nNotas[4]  := 311.12
+nNotas[5]  := 329.62
+nNotas[6]  := 349.22
+nNotas[7]  := 369.99
+nNotas[8]  := 391.99
+nNotas[9]  := 415.30
+nNotas[10] := 440
+nNotas[11] := 466.16
+nNotas[12] := 493.88
 
 
 do while .t.
    InKey(0)
+
+   if LastKey() == 5 .and. nNotas[12] < 3951.06
+      for i := 1 to 12
+         nNotas[i] := nNotas[i] * 2
+      next
+   elseif LastKey() == 24 .and. nNotas[1] > 16.35
+      for i := 1 to 12
+         nNotas[i] := nNotas[i] / 2
+      next
+   endif
+
    if LastKey() == 119
       //C
-      nTom := 1046.5
+      nTom := nNotas[1]
    elseif LastKey() == 51
       //C#
-      nTom := 1108.73
+      nTom := nNotas[2]
    elseif LastKey() == 101
       //D
-      nTom := 1174.66
+      nTom := nNotas[3]
    elseif LastKey() == 52
       //D#
-      nTom := 1244.51
+      nTom := nNotas[4]
    elseif LastKey() == 114
       //E
-      nTom := 1318.51
+      nTom := nNotas[5]
    elseif LastKey() == 116
       //F
-      nTom := 1396.91
+      nTom := nNotas[6]
    elseif LastKey() == 54
       //F#
-      nTom := 1479.98
+      nTom := nNotas[7]
    elseif LastKey() == 121
       //G
-      nTom := 1567.98
+      nTom := nNotas[8]
    elseif LastKey() == 55
       //G#
-      nTom := 1661.22
+      nTom := nNotas[9]
    elseif LastKey() == 117
       //A
-      nTom := 1760
+      nTom := nNotas[10]
    elseif LastKey() == 56
       //A#
-      nTom := 1864.66
+      nTom := nNotas[11]
    elseif LastKey() == 105
       //B
-      nTom := 1975.53
+      nTom := nNotas[12]
    endif
+
+   @ 10,05 to 10,25
 
    @ 02,01 say Str(nTom)
    Tone(nTom, 3)

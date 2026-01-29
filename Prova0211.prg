@@ -47,8 +47,8 @@ do while .t.
       nMenuOpcao1 := Alert("Deseja sair do sistema?", {"Sim", "Nao"})
       if nMenuOpcao1 == 1
          exit
-      end if
-   end if
+      endif
+   endif
 
    @ 04,00 to 10,79
    @ 04,32 say "DADOS PESSOAIS"
@@ -69,8 +69,8 @@ do while .t.
       nMenuOpcao2 := Alert("Abandonar cotacao?", {"Sim", "Nao"})
       if nMenuOpcao2 == 1
          loop
-      end if
-   end if
+      endif
+   endif
 
    @ 11,00 to 14,79
    @ 11,32 say "DADOS DO PLANO"
@@ -84,8 +84,8 @@ do while .t.
       nMenuOpcao3 := Alert("Abandonar cotacao?", {"Sim", "Nao"})
       if nMenuOpcao3 == 1
          loop
-      end if
-   end if
+      endif
+   endif
 
    do while nContagemCarregamento < 10
       @ 15,00 to 17,79
