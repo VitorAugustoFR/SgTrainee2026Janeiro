@@ -46,6 +46,9 @@ for i := 2 to 8
    i++
 next
 
+if posicaoh % 2 == 0
+   if posicaov % 2 == 0
+      cCOr := "RB/W"
 
 @ 01,01 say cTorre color 'RB/W'
 @ 01,08 say cTorre

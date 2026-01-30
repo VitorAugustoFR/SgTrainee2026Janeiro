@@ -27,11 +27,11 @@ nDistanciaV     := nVspd - nVspdInimigo
     
 
 do while .t.
-    lViuPlayer := 0
+    nViuPlayer := 0
 
     nPosicaoArmaV   := nVspd
     nPosicaoArmaH   := nHspd
-    lViuPlayer      := 0
+    nViuPlayer      := 0
     // se a vida do player for maior que 0
     //Transformar em if e criar um do while que engloba tudo
     if nVidaPersonagem > 0
@@ -47,9 +47,9 @@ do while .t.
 
                     //Checa se o player esta no campo de target do inimigo
             if (nDistanciaH < 8 .and. nDistanciaH > -8) .or. (nDistanciaV < 3 .and. nDistanciaV > -3)
-                lViuPlayer := 1
+                nViuPlayer := 1
             else
-                lViuPlayer := 0
+                nViuPlayer := 0
             end if
 
         @ nVspdInimigo,nHspdInimigo say " " Color cInimigo
@@ -76,7 +76,7 @@ do while .t.
             //Ultimo S
         @ nVspd,nHspd clear to nVspd,nHspd
             nVspd++
-        end if
+        endif
         @ nVspd,nHspd say " " Color cPersonagem
 
 
@@ -115,8 +115,7 @@ do while .t.
 
 
             //Comportamento do inimigo sem ver o player
-            switch lViuPlayer
-                case 0
+            if nViuPlayer == 0
                     @ 25,01 say "Nao viu o player"
                     @ nVspdInimigo,nHspdInimigo clear to nVspdInimigo,nHspdInimigo
                     if nDirecaoAleatoria     == 1 .and. nMovAleatorio == 1 .and. nHspdInimigo < 78
@@ -129,7 +128,7 @@ do while .t.
                         nVspdInimigo--
                     end if
                 //comportamento do inimigo após ver o player
-                case 1
+            elseif nViuPlayer == 1
                     @ 25,01 say "Viu o player"
                     @ nVspdInimigo,nHspdInimigo clear to nVspdInimigo,nHspdInimigo
                     if nDistanciaH     > 0 .and. nDistanciaH < 8 .and. nHspdInimigo < 78
@@ -148,7 +147,7 @@ do while .t.
         end if
 
         @ 00,00 to 24,79
-        inkey(0)
+        inkey(1)
     end if
 
     if nVidaPersonagem == 0

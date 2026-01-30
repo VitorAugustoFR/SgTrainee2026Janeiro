@@ -1,3 +1,5 @@
+//Praticamente concluido só falta a parte visual
+
 clear
 
 nTom := 0
@@ -20,11 +22,11 @@ nNotas[12] := 493.88
 do while .t.
    InKey(0)
 
-   if LastKey() == 5 .and. nNotas[12] < 3951.06
+   if LastKey() == 5 .and. nNotas[12] < 3951.05
       for i := 1 to 12
          nNotas[i] := nNotas[i] * 2
       next
-   elseif LastKey() == 24 .and. nNotas[1] > 16.35
+   elseif LastKey() == 24 .and. nNotas[1] > 16.36
       for i := 1 to 12
          nNotas[i] := nNotas[i] / 2
       next
@@ -68,6 +70,7 @@ do while .t.
       nTom := nNotas[12]
    endif
 
+   @ 10,05 to 5,05
    @ 10,05 to 10,25
 
    @ 02,01 say Str(nTom)
